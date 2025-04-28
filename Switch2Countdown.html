@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="Images/Switch 2 Icon.png" type="image">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <title>Nintendo Switch 2 Countdown</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Press Start 2P', system-ui;
+
+        }
+
+        body {
+            font-size: 2vw;
+            text-align: center;
+            background-color: gray;
+            /* background-image: url('Images/Switch 2 Countdown.png'); */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 75vh;
+            margin: 0;
+        }
+        .countdown-container {
+            font-size: 5vw;
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+            margin-right: auto;
+            margin-left: auto;
+            margin-bottom: 40px;
+        }
+
+        #countdown {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            font-size: 40px;
+            color:rgb(1, 107, 1);
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 5px;
+            display: inline-block;
+            border-radius: 10px;
+        }
+        h1 {
+            font-size: 60px;
+            color: rgb(1, 107, 1);
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            border-radius: 10px;
+        }
+        a {
+            display: flex;
+            justify-content: end;
+            align-items: flex-start;
+        }
+        header {
+            top: 5px;
+            width: 100%;
+            text-align: center;
+            font-size: 2vw;
+            font-weight: 700;
+        }
+
+        header h1 {
+            font-size: 60px;
+            color: rgb(1, 107, 1);
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            border-radius: 10px;
+            margin: 0;
+            line-height: 1;
+        }
+
+        footer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        button {
+            width: 200px;
+            height: 100px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 30px;
+        }
+
+        .music-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px
+        }
+
+        .buttons-counter {
+            background-image: url('Images/Switch 2 Countdown.png');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding: 100px 30px 60px 30px;
+
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 10vw;
+            }
+            .countdown-container {
+                width: 50vw;
+                padding-bottom: 5vw;
+            }
+            #countdown {
+                font-size: 8vw;
+            }
+            button {
+                size: 40vw;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 10vw;
+            }
+            .countdown-container {
+                width: 50vw;
+                padding-bottom: 5vw;
+            }
+            #countdown {
+                font-size: 8vw;
+            }
+        }
+    </style>
+</head>
+
+<header>
+    <h1>Countdown to Switch 2 Launch Day</h1>    
+</header>
+
+<body>
+    <div class="buttons-counter">
+        <div class="music-buttons">
+            <button id="mario-button">Mario</button>
+            <button id="zelda-button">Zelda</button>
+
+            <audio id="mario-music" loop>
+                <source src="Music/17 ウィンドガーデン.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+            <audio id="zelda-music" loop>
+                <source src="Music/01 メインテーマ.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        
+        <div class="countdown-container">
+            <div id="countdown">Loading...</div>
+        </div>
+
+        <script>
+        document.getElementById('mario-button').addEventListener('click', () => {
+            const music = document.getElementById('mario-music');
+            music.play();
+        });
+
+        document.getElementById('zelda-button').addEventListener('click', () => {
+            const music = document.getElementById('zelda-music');
+            music.play();
+        });
+
+        const targetDate = new Date("2025-06-05T00:00:00").getTime();
+
+        const countdown = document.getElementById("countdown");
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            if (distance < 0) {
+                countdown.innerHTML = "The event has started!";
+                clearInterval(timer);
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor ((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor ((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor ((distance % (1000 * 60)) / 1000);
+
+            countdown.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }
+
+            const timer = setInterval(updateCountdown, 1000);
+
+            updateCountdown();
+        </script>
+        <footer>
+            <a href="https://www.nintendo.com/us/" target="_blank"><img src="Images/Switch 2 Icon.png" alt="Nintendo Switch 2 icon" width="100" height="80"></a>
+            <a href="https://www.bestbuy.com/site/video-games/nintendo/pcmcat1742407305710.c?id=pcmcat1742407305710" target="_blank"><img src="Images/Best Buy Icon.png" alt="Nintendo Switch 2 icon" width="100" height="80"></a>
+            <a href="https://www.target.com/b/nintendo/-/N-5y626?afid=GAM_E&fndsrc=tmntga&cpng=7325712930&medID=6955997519&cid=138514588786" target="_blank"><img src="Images/Target Icon.png" alt="Nintendo Switch 2 icon" width="100" height="80"></a>
+            <a href="https://www.walmart.com/shop/switch2?povid=Nintendo_ETS_VideoGames_Shop_Chip_ShopAll" target="_blank"><img src="Images/Walmart Icon.png" alt="Nintendo Switch 2 icon" width="100" height="80"></a>
+        </footer>
+    </div>
+    
+</body>
+
+</html>
