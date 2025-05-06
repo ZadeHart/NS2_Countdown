@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <title>Nintendo Switch 2 Countdown</title>
     <style>
         * {
@@ -168,18 +169,35 @@
         </div>
 
         <script>
-        document.getElementById('mario-button').addEventListener('click', () => {
-            const music = document.getElementById('mario-music');
-            music.play();
-        });
+            const marioMusic = document.getElementById('mario-music');
+            const zeldaMusic = document.getElementById('zelda-music');
+            let currentTrack = null;
 
-        document.getElementById('zelda-button').addEventListener('click', () => {
-            const music = document.getElementById('zelda-music');
-            music.play();
-        });
+            function toggleMusic(track) {
+                if (currentTrack && currentTrack !== track) {
+                    currentTrack.pause();
+                    currentTrack.currentTime = 0;
+                }
+
+                if (track.paused) {
+                    track.play();
+                    currentTrack = track;
+                } else {
+                    track.pause();
+                    track.currentTime = 0;
+                    currentTrack = null;
+                }
+            }
+
+            document.getElementById('mario-button').addEventListener('click', () => {
+                toggleMusic(marioMusic);
+            });
+
+            document.getElementById('zelda-button').addEventListener('click', () => {
+                toggleMusic(zeldaMusic);
+            });
 
         const targetDate = new Date("2025-06-05T00:00:00").getTime();
-
         const countdown = document.getElementById("countdown");
 
         function updateCountdown() {
@@ -189,6 +207,32 @@
             if (distance < 0) {
                 countdown.innerHTML = "The event has started!";
                 clearInterval(timer);
+                confetti({
+                    particleCount: 150,
+                    spread: 70,
+                    origin: { y: 0.6}
+                });
+
+                let duration = 5 * 1000;
+                let animationEnd = Date.now() + duration;
+                let confettiInterval = setInterval(() => {
+                    if (Date.now() > animationEnd) {
+                        clearINterval(confettiInterval);
+                        return;
+                    }
+
+                    confett({
+                        particaleCount: 50,
+                        startVelocity: 30,
+                        spread: 360,
+                        ticks: 60,
+                        origin: {
+                            x: Math.random(),
+                            y: Math.random() - 0.2
+                        }
+                    });
+                }, 250);
+                
                 return;
             }
 
